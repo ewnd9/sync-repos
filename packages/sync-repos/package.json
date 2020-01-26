@@ -1,7 +1,7 @@
 {
   "name": "sync-repos",
   "description": "sync repos by wildcard from github/gitlab",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",
   "repository": "https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos",
