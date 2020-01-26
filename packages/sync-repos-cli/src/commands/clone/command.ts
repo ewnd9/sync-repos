@@ -62,7 +62,7 @@ export class CloneCommand extends Command {
         project,
         output: `${rootDir}/${resource}`,
         schema: this.schema,
-        depth: this.depth
+        depth: this.depth,
       });
     }
   }

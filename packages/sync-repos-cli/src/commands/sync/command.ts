@@ -11,6 +11,9 @@ export class CloneCommand extends Command {
   @Command.Boolean('--manifest')
   public manifest: boolean;
 
+  @Command.Boolean('--pull')
+  public pull: boolean;
+
   @Command.Path(`sync`)
   @Command.Path()
   async execute() {
@@ -60,7 +63,8 @@ export class CloneCommand extends Command {
         project,
         output: `${rootDir}/${resource}`,
         schema: manifest.schema,
-        depth: manifest.depth
+        depth: manifest.depth,
+        pull: this.pull
       });
     }
   }
