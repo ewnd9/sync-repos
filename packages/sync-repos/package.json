@@ -1,0 +1,21 @@
+{
+  "name": "sync-repos",
+  "description": "sync repos by wildcard from github/gitlab",
+  "version": "0.0.0",
+  "author": "ewnd9 <ewndnine@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@octokit/rest": "^16.38.3",
+    "execa": "^4.0.0",
+    "git-url-parse": "^11.1.2",
+    "gitlab": "^14.2.1",
+    "make-dir": "^3.0.0",
+    "minimatch": "^3.0.4"
+  }
+}

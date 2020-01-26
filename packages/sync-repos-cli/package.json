@@ -1,0 +1,27 @@
+{
+  "name": "sync-repos-cli",
+  "description": "sync repos cli by wildcard from github/gitlab",
+  "version": "0.0.0",
+  "preferGlobal": true,
+  "author": "ewnd9 <ewndnine@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos-cli",
+  "bin": {
+    "sync-repos": "./dist/cli.js"
+  },
+  "scripts": {
+    "start": "node dist/cli",
+    "start:dev": "ts-node src/cli",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "clipanion": "^2.1.6",
+    "configstore": "^5.0.0",
+    "globby": "^11.0.0",
+    "prompts": "^2.3.0",
+    "sync-repos": "0.0.0",
+    "yup": "^0.28.0"
+  }
+}
