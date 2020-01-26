@@ -40,7 +40,7 @@ export class CloneCommand extends Command {
         {
           queries: this.queries,
           schema: this.schema,
-          depth: this.schema,
+          depth: this.depth,
           output: this.output,
           projects
         },
