@@ -8,6 +8,7 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
+    "prepublishOnly": "rm -rf dist && yarn build",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

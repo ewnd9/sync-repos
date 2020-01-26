@@ -4,6 +4,7 @@
   "scripts": {
     "start": "node .",
     "start:dev": "yarn start",
+    "typecheck": "lerna run typecheck",
     "build:watch": "lerna run --parallel build:watch",
     "release": "lerna publish --conventional-commits --yes  --no-push"
   },
