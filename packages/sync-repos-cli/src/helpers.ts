@@ -1,4 +1,5 @@
 import gitUrlParse from 'git-url-parse';
+import snakeCase from 'lodash.snakecase';
 
 import {GitlabProvider} from 'sync-repos/dist/providers/gitlab-provider';
 import {GithubProvider} from 'sync-repos/dist/providers/github-provider';
@@ -7,14 +8,7 @@ export const MANIFEST_NAME = '.sync-repos.json';
 
 export async function getProvider(query) {
   const { resource } = gitUrlParse(query);
-  const key = `token-${resource}`;
-  const config = await this.ensureConfig('repo-clone', {
-    [key]: {
-      type: 'password'
-    }
-  });
-
-  const token = config[key];
+  const token = await getToken(resource);
 
   if (resource.includes('gitlab')) {
     return GitlabProvider.getProviderByHostname({ host: resource, token });
@@ -25,7 +19,29 @@ export async function getProvider(query) {
   }
 }
 
-export async function ensureConfig(
+async function getToken(resource: string) {
+  if (process.env.CI) {
+    const key = `TOKEN_${snakeCase(resource).toUpperCase()}`;
+    const token = process.env[key];
+
+    if (!token) {
+      throw new Error(`environment variable "${key}" is required`);
+    }
+
+    return token;
+  }
+
+  const key = `token-${resource}`;
+  const config = await ensureConfig('repo-clone', {
+    [key]: {
+      type: 'password'
+    }
+  });
+
+  return config[key];
+}
+
+async function ensureConfig(
   cmdKey: string,
   params: { [key: string]: { type: string; description?: string } }
 ) {
