@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos-cli/compare/sync-repos-cli@0.1.0...sync-repos-cli@0.2.0) (2020-02-13)
+
+
+### Features
+
+* **sync-repos-cli:** take token from process.env in CI ([98e7bb6](https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos-cli/commit/98e7bb6ba4e93dee71dafe1a2290244b4e2ac366))
+
+
+
+
+
 # 0.1.0 (2020-01-26)
 
 
