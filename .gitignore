@@ -1,4 +1,4 @@
 node_modules
 dist
-repos
-.sync-repos.json
+repos*
+.sync-repos*.json

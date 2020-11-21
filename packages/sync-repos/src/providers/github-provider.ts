@@ -42,7 +42,8 @@ export class GithubProvider extends AbstractProvider {
         fullName: project.full_name,
         httpsUrl: project.clone_url,
         sshUrl: project.ssh_url,
-        fork: project.fork
+        fork: project.fork,
+        tags: project.topics
       }));
   }
 
@@ -53,7 +54,11 @@ export class GithubProvider extends AbstractProvider {
       const { data } = await this.api.repos.listForOrg({
         org,
         page: page + 1,
-        per_page: 100
+        per_page: 100,
+        // https://github.com/octokit/rest.js/issues/1165#issuecomment-448666000
+        headers: {
+          accept: 'application/vnd.github.mercy-preview+json'
+        },
       });
 
       if (data.length === 0) {
@@ -73,7 +78,11 @@ export class GithubProvider extends AbstractProvider {
       const { data } = await this.api.repos.listForUser({
         username,
         page: page + 1,
-        per_page: 100
+        per_page: 100,
+        // https://github.com/octokit/rest.js/issues/1165#issuecomment-448666000
+        headers: {
+          accept: 'application/vnd.github.mercy-preview+json'
+        },
       });
 
       if (data.length === 0) {

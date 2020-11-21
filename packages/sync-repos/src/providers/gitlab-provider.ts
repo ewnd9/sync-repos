@@ -40,7 +40,8 @@ export class GitlabProvider extends AbstractProvider {
         fullName: project.path_with_namespace,
         httpsUrl: project.http_url_to_repo,
         sshUrl: project.ssh_url_to_repo,
-        fork: !!project.forked_from_project
+        fork: !!project.forked_from_project,
+        tags: project.tag_list,
       }));
   }
 
