@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.2.0](https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos/compare/sync-repos@0.1.0...sync-repos@0.2.0) (2020-11-21)
+
+
+### Features
+
+* **sync-repos:** fetch all available groups/projects ([ba76ff2](https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos/commit/ba76ff2b81ab0ec26da6b94bee9446c1588ec513))
+* **sync-repos:** map tags to manifest ([2ad812e](https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos/commit/2ad812e7164b7db017a3d1537fa4e2a123921ae3))
+
+
+
+
+
 # 0.1.0 (2020-01-26)
 
 
