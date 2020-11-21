@@ -68,7 +68,9 @@ export class GitlabProvider extends AbstractProvider {
   }
 
   async _getAllNestedGroups(parentId, result = []) {
-    for (const child of await this.api.Groups.subgroups(parentId)) {
+    for (const child of await this.api.Groups.subgroups(parentId, {
+      all_available: true,
+    })) {
       result.push(child);
       await this._getAllNestedGroups(child.id, result);
     }
@@ -78,7 +80,9 @@ export class GitlabProvider extends AbstractProvider {
 
   async _getAllGroupProjects(groups, result = []) {
     for (const { id } of groups) {
-      for (const child of await this.api.Groups.projects(id)) {
+      for (const child of await this.api.Groups.projects(id, {
+        all_available: true,
+      })) {
         result.push(child);
       }
     }
