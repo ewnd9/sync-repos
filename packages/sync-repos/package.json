@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "@octokit/rest": "^16.38.3",
+    "axios": "^0.21.1",
     "execa": "^4.0.0",
     "git-url-parse": "^11.1.2",
-    "gitlab": "^14.2.1",
     "make-dir": "^3.0.0",
     "minimatch": "^3.0.4"
   }

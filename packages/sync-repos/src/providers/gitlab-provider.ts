@@ -1,20 +1,22 @@
 import minimatch from 'minimatch';
-import { Gitlab } from 'gitlab';
+import axios, { AxiosInstance } from 'axios';
 
 import { AbstractProvider } from './abstract-provider';
 
 const map = {};
 
 export class GitlabProvider extends AbstractProvider {
-  constructor(private api: Gitlab) {
+  perPage = 100;
+
+  constructor(private api: AxiosInstance) {
     super();
   }
 
   static getProviderByHostname({ host, token }) {
     if (!map[host]) {
-      const api = new Gitlab({
-        host: `https://${host}`,
-        token
+      const api = axios.create({
+        baseURL: `https://${host}`,
+        headers: { 'PRIVATE-TOKEN': token },
       });
 
       map[host] = new GitlabProvider(api);
@@ -23,79 +25,107 @@ export class GitlabProvider extends AbstractProvider {
     return map[host];
   }
 
-  async getAllProjects({ owner, name }) {
+  async getAllProjects({ owner, name }: { owner: string; name: string }) {
     const parts = owner.split('/');
-    const projects = [
-      ...(await this.getAllProjectsByGroup(parts[0])),
-      ...(await this.getAllProjectsByUser(parts[0]))
-    ];
+
+    const staticPart = parts
+      .filter((part) => part.indexOf('*') === -1)
+      .join('/');
+
+    const promises = [this.getAllProjectsByGroup(staticPart)];
+
+    if (parts.length === 2) {
+      promises.push(this.getAllProjectsByUser(staticPart));
+    }
+
+    const projects = (await Promise.all(promises)).flatMap((_) => _);
 
     return projects
-      .filter(project =>
+      .filter((project) =>
         minimatch(project.path_with_namespace, `${owner}/${name}`)
       )
-      .map(project => ({
+      .map((project) => ({
         id: project.id,
         name: project.name,
         fullName: project.path_with_namespace,
         httpsUrl: project.http_url_to_repo,
         sshUrl: project.ssh_url_to_repo,
         fork: !!project.forked_from_project,
+        archived: !!project.archived,
         tags: project.tag_list,
       }));
   }
 
-  async getAllProjectsByGroup(search) {
-    const top = (await this.api.Groups.search(search))[0];
+  async getAllProjectsByGroup(search: string) {
+    return fetchAll(
+      async ({ page }) => {
+        const response = await this.api.get(
+          `/api/v4/groups/${encodeURIComponent(search)}/projects`,
+          {
+            params: {
+              include_subgroups: true,
+              all_available: true,
+              page,
+              per_page: this.perPage,
+            },
+          }
+        );
 
-    if (!top) {
-      return [];
-    }
-
-    const nested = await this._getAllNestedGroups(top.id);
-    const groups = [top, ...nested];
-
-    return this._getAllGroupProjects(groups);
-  }
-
-  async getAllProjectsByUser(search) {
-    const user = (await this.api.Users.search(search))[0];
-
-    if (!user) {
-      return [];
-    }
-
-    return this._getAllUserProjects(user);
-  }
-
-  async _getAllNestedGroups(parentId, result = []) {
-    for (const child of await this.api.Groups.subgroups(parentId, {
-      all_available: true,
-    })) {
-      result.push(child);
-      await this._getAllNestedGroups(child.id, result);
-    }
-
-    return result;
-  }
-
-  async _getAllGroupProjects(groups, result = []) {
-    for (const { id } of groups) {
-      for (const child of await this.api.Groups.projects(id, {
-        all_available: true,
-      })) {
-        result.push(child);
+        return response.data;
+      },
+      {
+        perPage: this.perPage,
       }
-    }
-
-    return result;
+    );
   }
 
-  async _getAllUserProjects(user, result = []) {
-    for (const child of (await this.api.Users.projects(user.id)) as object[]) {
-      result.push(child);
+  async getAllProjectsByUser(search: string) {
+    return fetchAll(
+      async ({ page }) => {
+        const response = await this.api.get(
+          `/api/v4/users/${encodeURIComponent(search)}/projects`,
+          {
+            params: {
+              page,
+              per_page: this.perPage,
+            },
+          }
+        );
+
+        return response.data;
+      },
+      {
+        perPage: this.perPage,
+      }
+    );
+  }
+}
+
+async function fetchAll<T>(
+  fetcher: (opts: { page: number }) => Promise<T[]>,
+  { perPage }: { perPage: number }
+) {
+  const result = [];
+
+  for (let page = 0; ; page++) {
+    let data;
+
+    try {
+      data = await fetcher({ page });
+    } catch (err) {
+      if (err.response?.status !== 404) {
+        throw err;
+      }
+
+      break;
     }
 
-    return result;
+    result.push.apply(result, data);
+
+    if (data.length !== perPage) {
+      break;
+    }
   }
+
+  return result;
 }
