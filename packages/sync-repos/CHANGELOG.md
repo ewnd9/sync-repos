@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos/compare/sync-repos@0.2.0...sync-repos@0.3.0) (2021-03-25)
+
+
+### Features
+
+* **sync-repos:** rewrite gitlab-provider ([1b530fa](https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos/commit/1b530fa4e68e64329814ed9a23ed2bf6c221d71c))
+
+
+
+
+
 # [0.2.0](https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos/compare/sync-repos@0.1.0...sync-repos@0.2.0) (2020-11-21)
 
 
