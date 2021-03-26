@@ -107,7 +107,7 @@ async function fetchAll<T>(
 ) {
   const result = [];
 
-  for (let page = 0; ; page++) {
+  for (let page = 1; ; page++) {
     let data;
 
     try {
