@@ -1,7 +1,7 @@
 {
   "name": "sync-repos-cli",
   "description": "sync repos cli by wildcard from github/gitlab",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "preferGlobal": true,
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "globby": "^11.0.0",
     "lodash.snakecase": "^4.1.1",
     "prompts": "^2.3.0",
-    "sync-repos": "^0.3.0",
+    "sync-repos": "^0.3.1",
     "yup": "^0.28.0"
   }
 }

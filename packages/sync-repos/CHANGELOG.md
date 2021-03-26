@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1](https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos/compare/sync-repos@0.3.0...sync-repos@0.3.1) (2021-03-26)
+
+
+### Bug Fixes
+
+* start pagination from 1 ([8c7ec8d](https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos/commit/8c7ec8d762cfd137e961d9400945d927b656fc52))
+
+
+
+
+
 # [0.3.0](https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos/compare/sync-repos@0.2.0...sync-repos@0.3.0) (2021-03-25)
 
 
