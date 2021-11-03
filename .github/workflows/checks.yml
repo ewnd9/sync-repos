@@ -1,0 +1,19 @@
+name: checks
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+jobs:
+  default:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: install
+        run: yarn install --frozen-lockfile
+      - name: check
+        run: |
+          yarn lint

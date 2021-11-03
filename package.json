@@ -4,6 +4,7 @@
   "scripts": {
     "start": "node .",
     "start:dev": "yarn start",
+    "lint": "eslint 'packages/*/src/**/*.ts' '.*.js'",
     "typecheck": "lerna run typecheck",
     "build:watch": "lerna run --parallel build:watch",
     "release": "lerna publish --conventional-commits --yes  --no-push"
@@ -14,7 +15,12 @@
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^12.12.14",
+    "@typescript-eslint/eslint-plugin": "^5.3.0",
+    "@typescript-eslint/parser": "^5.3.0",
+    "eslint": "^8.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "lerna": "^3.20.2",
+    "prettier": "^2.4.1",
     "ts-node": "^8.5.2",
     "typescript": "^3.7.2"
   }

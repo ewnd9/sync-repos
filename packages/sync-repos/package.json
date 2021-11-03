@@ -5,6 +5,9 @@
   "author": "ewnd9 <ewndnine@gmail.com>",
   "license": "MIT",
   "repository": "https://github.com/ewnd9/sync-repos/tree/master/packages/sync-repos",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",

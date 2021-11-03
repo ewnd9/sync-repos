@@ -43,7 +43,7 @@ export class CloneCommand extends Command {
       JSON.stringify(
         {
           ...manifest,
-          projects
+          projects,
         },
         null,
         2
@@ -64,12 +64,12 @@ export class CloneCommand extends Command {
         output: `${rootDir}/${resource}`,
         schema: manifest.schema,
         depth: manifest.depth,
-        pull: this.pull
+        pull: this.pull,
       });
     }
   }
 
   static schema = yup.object().shape({
-    depth: yup.number().integer()
+    depth: yup.number().integer(),
   });
 }
