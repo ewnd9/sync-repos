@@ -1,8 +1,8 @@
 import gitUrlParse from 'git-url-parse';
 import snakeCase from 'lodash.snakecase';
 
-import {GitlabProvider} from 'sync-repos/dist/providers/gitlab-provider';
-import {GithubProvider} from 'sync-repos/dist/providers/github-provider';
+import { GitlabProvider } from 'sync-repos/dist/providers/gitlab-provider';
+import { GithubProvider } from 'sync-repos/dist/providers/github-provider';
 
 export const MANIFEST_NAME = '.sync-repos.json';
 
@@ -34,17 +34,14 @@ async function getToken(resource: string) {
   const key = `token-${resource}`;
   const config = await ensureConfig('repo-clone', {
     [key]: {
-      type: 'password'
-    }
+      type: 'password',
+    },
   });
 
   return config[key];
 }
 
-async function ensureConfig(
-  cmdKey: string,
-  params: { [key: string]: { type: string; description?: string } }
-) {
+async function ensureConfig(cmdKey: string, params: { [key: string]: { type: string; description?: string } }) {
   const { default: prompts } = await import('prompts');
   const { default: Configstore } = await import('configstore');
   const confData = new Configstore('sync-repos-cli');
@@ -64,7 +61,7 @@ async function ensureConfig(
     const response = await prompts({
       type: v.type || 'text',
       name: 'value',
-      message: v.description || paramRawKey
+      message: v.description || paramRawKey,
     });
 
     result[paramRawKey] = response.value;

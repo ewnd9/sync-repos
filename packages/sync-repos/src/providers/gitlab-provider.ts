@@ -28,9 +28,7 @@ export class GitlabProvider extends AbstractProvider {
   async getAllProjects({ owner, name }: { owner: string; name: string }) {
     const parts = owner.split('/');
 
-    const staticPart = parts
-      .filter((part) => part.indexOf('*') === -1)
-      .join('/');
+    const staticPart = parts.filter((part) => part.indexOf('*') === -1).join('/');
 
     const promises = [this.getAllProjectsByGroup(staticPart)];
 
@@ -41,9 +39,7 @@ export class GitlabProvider extends AbstractProvider {
     const projects = (await Promise.all(promises)).flatMap((_) => _);
 
     return projects
-      .filter((project) =>
-        minimatch(project.path_with_namespace, `${owner}/${name}`)
-      )
+      .filter((project) => minimatch(project.path_with_namespace, `${owner}/${name}`))
       .map((project) => ({
         id: project.id,
         name: project.name,
@@ -59,17 +55,14 @@ export class GitlabProvider extends AbstractProvider {
   async getAllProjectsByGroup(search: string) {
     return fetchAll(
       async ({ page }) => {
-        const response = await this.api.get(
-          `/api/v4/groups/${encodeURIComponent(search)}/projects`,
-          {
-            params: {
-              include_subgroups: true,
-              all_available: true,
-              page,
-              per_page: this.perPage,
-            },
-          }
-        );
+        const response = await this.api.get(`/api/v4/groups/${encodeURIComponent(search)}/projects`, {
+          params: {
+            include_subgroups: true,
+            all_available: true,
+            page,
+            per_page: this.perPage,
+          },
+        });
 
         return response.data;
       },
@@ -82,15 +75,12 @@ export class GitlabProvider extends AbstractProvider {
   async getAllProjectsByUser(search: string) {
     return fetchAll(
       async ({ page }) => {
-        const response = await this.api.get(
-          `/api/v4/users/${encodeURIComponent(search)}/projects`,
-          {
-            params: {
-              page,
-              per_page: this.perPage,
-            },
-          }
-        );
+        const response = await this.api.get(`/api/v4/users/${encodeURIComponent(search)}/projects`, {
+          params: {
+            page,
+            per_page: this.perPage,
+          },
+        });
 
         return response.data;
       },
@@ -101,10 +91,7 @@ export class GitlabProvider extends AbstractProvider {
   }
 }
 
-async function fetchAll<T>(
-  fetcher: (opts: { page: number }) => Promise<T[]>,
-  { perPage }: { perPage: number }
-) {
+async function fetchAll<T>(fetcher: (opts: { page: number }) => Promise<T[]>, { perPage }: { perPage: number }) {
   const result = [];
 
   for (let page = 1; ; page++) {

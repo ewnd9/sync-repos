@@ -11,15 +11,11 @@ export class AbstractProvider {
     if (fs.existsSync(repoFsPath)) {
       if (pull) {
         try {
-          const { stdout: branch } = await execa(
-            'git',
-            ['rev-parse', '--abbrev-ref', 'HEAD'],
-            { cwd: repoFsPath }
-          );
+          const { stdout: branch } = await execa('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { cwd: repoFsPath });
 
           await execa('git', ['pull', 'origin', branch], {
             stdio: 'inherit',
-            cwd: repoFsPath
+            cwd: repoFsPath,
           });
         } catch (err) {
           console.error(err);
@@ -39,7 +35,7 @@ export class AbstractProvider {
     }
 
     await execa('git', args, {
-      stdio: 'inherit'
+      stdio: 'inherit',
     });
   }
 }

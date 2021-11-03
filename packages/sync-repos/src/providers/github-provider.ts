@@ -14,7 +14,7 @@ export class GithubProvider extends AbstractProvider {
     if (!map[host]) {
       const api = new Octokit({
         baseUrl: `https://api.${host}`,
-        auth: token
+        auth: token,
       });
 
       map[host] = new GithubProvider(api);
@@ -35,15 +35,15 @@ export class GithubProvider extends AbstractProvider {
     }
 
     return projects
-      .filter(project => minimatch(project.full_name, `${owner}/${name}`))
-      .map(project => ({
+      .filter((project) => minimatch(project.full_name, `${owner}/${name}`))
+      .map((project) => ({
         id: project.id,
         name: project.name,
         fullName: project.full_name,
         httpsUrl: project.clone_url,
         sshUrl: project.ssh_url,
         fork: project.fork,
-        tags: project.topics
+        tags: project.topics,
       }));
   }
 
@@ -57,7 +57,7 @@ export class GithubProvider extends AbstractProvider {
         per_page: 100,
         // https://github.com/octokit/rest.js/issues/1165#issuecomment-448666000
         headers: {
-          accept: 'application/vnd.github.mercy-preview+json'
+          accept: 'application/vnd.github.mercy-preview+json',
         },
       });
 
@@ -81,7 +81,7 @@ export class GithubProvider extends AbstractProvider {
         per_page: 100,
         // https://github.com/octokit/rest.js/issues/1165#issuecomment-448666000
         headers: {
-          accept: 'application/vnd.github.mercy-preview+json'
+          accept: 'application/vnd.github.mercy-preview+json',
         },
       });
 

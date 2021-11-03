@@ -42,7 +42,7 @@ export class CloneCommand extends Command {
           schema: this.schema,
           depth: this.depth,
           output: this.output,
-          projects
+          projects,
         },
         null,
         2
@@ -68,6 +68,6 @@ export class CloneCommand extends Command {
   }
 
   static schema = yup.object().shape({
-    depth: yup.number().integer()
+    depth: yup.number().integer(),
   });
 }
