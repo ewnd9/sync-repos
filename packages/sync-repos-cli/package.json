@@ -9,6 +9,9 @@
   "bin": {
     "sync-repos": "./dist/cli.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "start": "node dist/cli",
     "start:dev": "ts-node src/cli",

@@ -1,0 +1,28 @@
+name: canary-release
+
+on: workflow_dispatch
+
+jobs:
+  default:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: install
+        run: yarn install --frozen-lockfile
+      - name: auth
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: publish
+        run: >
+          lerna publish
+          --conventional-commits
+          --yes
+          --message "chore: release [ci skip]"
+          --no-push
+          --no-verify-access
+          --canary
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
